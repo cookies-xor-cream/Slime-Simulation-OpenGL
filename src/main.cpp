@@ -149,6 +149,8 @@ int main() {
 	// glVertexArrayVertexBuffer(screenVAO, 0, screenVBO, 0, 2 * sizeof(GLfloat));
 	// glVertexArrayElementBuffer(screenVAO, screenEBO);
 
+	Shader computeShader("./shaders/blur.comp", GL_COMPUTE_SHADER);
+
 	// ------------------------------------------------------------------------
 	// MAIN WHILE LOOP
 	

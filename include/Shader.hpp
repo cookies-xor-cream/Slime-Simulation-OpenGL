@@ -15,6 +15,7 @@ class Shader {
 		GLuint ID;
 
 		Shader(const char* vertexFile, const char* fragmentFile);
+		Shader(const char* filename, const GLuint shaderType);
 };
 
 #endif

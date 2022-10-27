@@ -41,3 +41,18 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile) {
 
 	ID = shaderProgram;
 }
+
+Shader::Shader(const char* filename, const GLuint shaderType) {
+    ID = glCreateShader(GL_COMPUTE_SHADER);
+
+	// Read vertexFile and fragmentFile and store the strings
+	std::string shaderCode = get_file_contents(filename);
+
+	// Convert the shader source strings into character arrays
+	const char* shaderSource = shaderCode.c_str();
+
+	// Attach Vertex Shader source to the Vertex Shader Object
+	glShaderSource(ID, 1, &shaderSource, NULL);
+	// Compile the Vertex Shader into machine code
+	glCompileShader(ID);
+}
