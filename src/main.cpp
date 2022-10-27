@@ -151,6 +151,12 @@ int main() {
 
 	Shader computeShader("./shaders/blur.comp", GL_COMPUTE_SHADER);
 
+	GLuint computeProgram = glCreateProgram();
+	glAttachShader(computeProgram, computeShader.ID);
+	glLinkProgram(computeProgram);
+
+	glDeleteShader(computeShader.ID);
+
 	// ------------------------------------------------------------------------
 	// MAIN WHILE LOOP
 	
@@ -173,6 +179,11 @@ int main() {
 		glUseProgram(blurShaderProgram.ID);
 		glBindVertexArray(screenVAO);
 		glDrawElements(GL_TRIANGLES, sizeof(screenIndices) / sizeof(screenIndices[0]), GL_UNSIGNED_INT, 0);
+		glMemoryBarrier(GL_ALL_BARRIER_BITS);
+
+		glUseProgram(computeProgram);
+		glUniform1f(glGetUniformLocation(computeProgram, "agentSpeed"), AGENT_SPEED);
+		glDispatchCompute(ceil(WINDOW_WIDTH / 8), ceil(WINDOW_HEIGHT / 4), 1);
 		glMemoryBarrier(GL_ALL_BARRIER_BITS);
 
 		glfwSwapBuffers(window);
