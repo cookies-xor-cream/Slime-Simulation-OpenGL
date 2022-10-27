@@ -65,6 +65,34 @@ int main() {
 
 	glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
+	// ---------------- BEGIN SHADER DATA ----------------
+
+	// We generate a bunch of positions
+	Agent *agents = createAgents();
+    std::vector<glm::vec4> agentData(AGENT_COUNT);
+
+	// initial position
+    for(int i = 0; i < AGENT_COUNT; i++) {
+        glm::vec2 position = agents[i].position;
+        glm::vec2 direction = agents[i].direction;
+		agentData[i] = glm::vec4(position.x, position.y, direction.x, direction.y);
+    }
+
+	GLuint agentDataBuffer;
+	glCreateBuffers(1, &agentDataBuffer);
+
+    // fill with initial data
+    glBindBuffer(GL_ARRAY_BUFFER, agentDataBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec4)*AGENT_COUNT, &agentData[0], GL_STATIC_DRAW);
+
+    // set up generic attrib pointers: do I need these?
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4*sizeof(GLfloat), (char*)0 + 0*sizeof(GLfloat));
+
+	glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 1, agentDataBuffer);
+
+	// ---------------- END SHADER DATA ----------------
+
 	// ------------------------------------------------------------------------
 	// SCREEN TEXTURE
 
@@ -112,10 +140,7 @@ int main() {
 	// ------------------------------------------------------------------------
 	// AGENT SHADER
 
-	Agent *agents = createAgents();
-
 	GLfloat *agentVertices = getAgentVertices(agents);
-
 	Shader agentShaderProgram("./shaders/agent.vert", "./shaders/agent.frag");
 
 	GLuint agentVAO, agentVBO;
