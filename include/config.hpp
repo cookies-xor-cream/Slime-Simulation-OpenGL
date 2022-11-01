@@ -6,9 +6,9 @@ const unsigned short WINDOW_WIDTH = 800;
 const unsigned short WINDOW_HEIGHT = 600;
 
 /* AGENT */
-const unsigned int AGENT_COUNT = 1024;
-const float AGENT_MOVE_SPEED = 0.00001f; // As a proportion of the screen per frame
-const float AGENT_LUMINANCE = 0.5f;
+const unsigned int AGENT_COUNT = 4096;
+const float AGENT_MOVE_SPEED = 0.00002f; // As a proportion of the screen per frame
+const float AGENT_LUMINANCE = 0.3f;
 const float AGENT_TURN_SPEED = 1.0f; // unimplemented
 
 /* AGENT - SENSOR */

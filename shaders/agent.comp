@@ -101,7 +101,7 @@ vec2 computeAcceleration(vec2 agentPosition, vec2 agentDirection) {
 }
 
 void main() {
-	int index = int(gl_GlobalInvocationID);
+	int index = int(gl_GlobalInvocationID.xy);
 
 	vec2 agentPosition = agentPositions[index];
 	vec2 agentDirection = agentDirections[index];
